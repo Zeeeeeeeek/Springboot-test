@@ -1,7 +1,9 @@
 package com.zhejianglab.spring3web.controller;
 
 import com.zhejianglab.spring3common.dto.Result;
+import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3service.redis.RedisUtil;
+import com.zhejianglab.spring3web.exception.CustomException;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,14 @@ public class TestController {
     @GetMapping("get")
     public Result get() {
         return Result.success(redisUtil.get("kk:test:1"));
+    }
+
+    @GetMapping("error")
+    public Result error(Integer a) {
+        if(a>1){
+            throw new CustomException(ResultCode.INTERFACE_FORBID_VISIT);
+        }
+        return Result.success();
     }
 
 }

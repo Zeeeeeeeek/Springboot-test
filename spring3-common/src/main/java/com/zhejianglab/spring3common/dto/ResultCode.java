@@ -1,5 +1,7 @@
 package com.zhejianglab.spring3common.dto;
 
+import lombok.Getter;
+
 /**
  * @author chenze
  * @date 2022/3/24
@@ -44,8 +46,10 @@ public enum ResultCode {
     /* 权限错误：70001-79999 */
     PERMISSION_NO_ACCESS(70001, "无访问权限");
 
+    @Getter
     private final Integer code;
 
+    @Getter
     private final String message;
 
     ResultCode(Integer code, String message) {
@@ -61,7 +65,7 @@ public enum ResultCode {
         return this.message;
     }
 
-    public static String getMessage(String name) {
+    public static String parseMessage(String name) {
         for (ResultCode item : ResultCode.values()) {
             if (item.name().equals(name)) {
                 return item.message;
@@ -70,7 +74,7 @@ public enum ResultCode {
         return name;
     }
 
-    public static Integer getCode(String name) {
+    public static Integer parseCode(String name) {
         for (ResultCode item : ResultCode.values()) {
             if (item.name().equals(name)) {
                 return item.code;
