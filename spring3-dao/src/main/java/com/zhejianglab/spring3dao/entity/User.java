@@ -1,8 +1,10 @@
 package com.zhejianglab.spring3dao.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -32,12 +34,14 @@ public class User implements Serializable {
      * 用户名
      */
     @TableField("user_name")
+    @NotNull(message = "用户名不能为空")
     private String userName;
 
     /**
      * 用户真实姓名
      */
     @TableField("real_name")
+    @NotNull(message = "真实姓名不能为空")
     private String realName;
 
     /**
@@ -56,6 +60,7 @@ public class User implements Serializable {
      * 用户密码
      */
     @TableField("password")
+    @Length(max = 10,message = "密码长度不能超过10")
     private String password;
 
     /**

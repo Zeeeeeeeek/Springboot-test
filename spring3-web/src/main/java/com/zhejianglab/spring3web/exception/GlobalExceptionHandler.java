@@ -1,15 +1,16 @@
 package com.zhejianglab.spring3web.exception;
 
-import com.alibaba.fastjson.JSON;
 import com.zhejianglab.spring3common.dto.Result;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.zhejianglab.spring3common.dto.ResultCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.io.PrintWriter;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author chenze
@@ -20,18 +21,28 @@ import java.io.PrintWriter;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = CustomException.class)
-    @ResponseBody
-    public void customerException(HttpServletRequest req, HttpServletResponse res, CustomException ex) throws Exception {
+    public Result customerException(CustomException ex) {
         log.error("自定义异常:" + ex);
-        respData(res, Result.failure(ex.getCode(), ex.getMessage()));
+        return Result.failure(ex.getCode(),ex.getMessage());
     }
 
-    private void respData(HttpServletResponse res, Object data) throws Exception {
-        res.setContentType("application/json;charset=utf-8");
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        PrintWriter printWriter = res.getWriter();
-        printWriter.write(JSON.toJSONString(data));
-        printWriter.flush();
-        printWriter.close();
+    @ExceptionHandler(value = SQLIntegrityConstraintViolationException.class)
+    public Result SQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex){
+        log.error("字段唯一性报错:" + ex);
+        return Result.failure(ex.getErrorCode(),ex.getMessage());
     }
+
+    // 处理 MethodArgumentNotValidException 的异常
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result handleValidationException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getAllErrors().forEach(error -> {
+            String field = ((FieldError) error).getField();
+            String defaultMessage = error.getDefaultMessage();
+            errors.put(field, defaultMessage);
+        });
+        return Result.failure(ResultCode.PARAM_VALIDATE_ERROR,errors);
+    }
+
+
 }

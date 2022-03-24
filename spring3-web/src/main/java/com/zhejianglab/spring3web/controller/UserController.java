@@ -1,16 +1,15 @@
 package com.zhejianglab.spring3web.controller;
 
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhejianglab.spring3common.dto.DataList;
 import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3dao.entity.User;
 import com.zhejianglab.spring3service.service.IUserService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -27,12 +26,17 @@ public class UserController {
     @Resource
     private IUserService userService;
 
-
     @GetMapping("listByPage")
     public Result listByPage(@RequestParam(required = false,defaultValue = "1") Integer current,
                              @RequestParam(required = false,defaultValue = "20") Integer pageSize){
         Page<User> page = this.userService.selectByPage(current,pageSize);
         return Result.success(new DataList<>(page.getTotal(),page.getRecords()));
+    }
+
+    @PostMapping("save")
+    public Result save(@RequestBody @Valid User user){
+        user.setPassword(SecureUtil.md5(user.getPassword()));
+        return Result.success(this.userService.saveOrUpdate(user));
     }
 
 }

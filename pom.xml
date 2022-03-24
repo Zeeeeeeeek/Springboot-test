@@ -30,6 +30,7 @@
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
+        <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
     </properties>
 
     <dependencyManagement>
@@ -81,6 +82,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons-pool2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
             </dependency>
 
         </dependencies>
