@@ -1,0 +1,30 @@
+spring:
+  devtools:
+    livereload:
+      enabled: false
+  profiles:
+    active: dev
+---
+#测试环境配置
+spring:
+  config:
+    activate:
+      on-profile: dev
+server:
+  port: 8080
+---
+#测试环境配置
+spring:
+  config:
+    activate:
+      on-profile: test
+server:
+  port: 8081
+---
+#生产环境配置
+spring:
+  config:
+    activate:
+      on-profile: pro
+server:
+  port: 8082
