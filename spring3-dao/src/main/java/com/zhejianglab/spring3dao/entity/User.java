@@ -2,6 +2,7 @@ package com.zhejianglab.spring3dao.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@Builder
 @TableName("user")
 public class User implements Serializable {
 
