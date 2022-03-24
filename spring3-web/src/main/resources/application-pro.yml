@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: springboot3
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring3?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+
+mybatis-plus:
+  mapper-locations: classpath:/xml/*.xml
