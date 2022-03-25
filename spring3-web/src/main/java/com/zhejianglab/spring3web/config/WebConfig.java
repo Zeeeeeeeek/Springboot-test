@@ -18,32 +18,18 @@ public class WebConfig implements WebMvcConfigurer {
     @Resource
     private LoginInterceptor loginInterceptor;
 
-    /**
-     * 跨域
-     * @param registry
-     */
-  /*  @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedHeaders("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowCredentials(false)
-                .maxAge(86400);
-    }*/
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TimeConsumingInterceptor())
-                // 需拦截的URI配置
-                .addPathPatterns("/**")
-                // 不需拦截的URI配置
-                .excludePathPatterns("/swagger/**", "/static/**", "/resource/**");
         registry.addInterceptor(loginInterceptor)
                 // 需拦截的URI配置
                 .addPathPatterns("/**")
                 // 不需拦截的URI配置
                 .excludePathPatterns("/swagger/**", "/static/**", "/resource/**","/auth/**","/test/**");
+        registry.addInterceptor(new TimeConsumingInterceptor())
+                // 需拦截的URI配置
+                .addPathPatterns("/**")
+                // 不需拦截的URI配置
+                .excludePathPatterns("/swagger/**", "/static/**", "/resource/**");
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhejianglab.spring3common.dto.DataList;
 import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3dao.entity.User;
+import com.zhejianglab.spring3service.holder.SessionLocal;
 import com.zhejianglab.spring3service.redis.RedisKeyUtil;
 import com.zhejianglab.spring3service.redis.RedisUtil;
 import com.zhejianglab.spring3service.service.IUserService;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseController{
+public class UserController{
 
     @Resource
     private IUserService userService;
@@ -46,9 +47,10 @@ public class UserController extends BaseController{
 
     @GetMapping("logout")
     public Result logout(){
-        String key = RedisKeyUtil.userTokenKey(getUserId());
-        String refreshKey = RedisKeyUtil.userRefreshTokenKey(getUserId());
-        String userInfoKey = RedisKeyUtil.userInfo(getUserId());
+        String userId = SessionLocal.getUserInfo().getUserId().toString();
+        String key = RedisKeyUtil.userTokenKey(userId);
+        String refreshKey = RedisKeyUtil.userRefreshTokenKey(userId);
+        String userInfoKey = RedisKeyUtil.userInfo(userId);
         redisUtil.del(key);
         redisUtil.del(refreshKey);
         redisUtil.del(userInfoKey);

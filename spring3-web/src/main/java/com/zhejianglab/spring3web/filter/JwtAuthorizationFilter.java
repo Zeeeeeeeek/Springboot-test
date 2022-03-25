@@ -5,6 +5,9 @@ import cn.hutool.json.JSONUtil;
 import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.utils.JwtUtil;
+import com.zhejianglab.spring3dao.vo.UserVo;
+import com.zhejianglab.spring3service.holder.LocalInfo;
+import com.zhejianglab.spring3service.holder.SessionLocal;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,10 +48,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         Map<String, Object> claims = JwtUtil.getClaims(token);
         String role = String.valueOf(claims.get(ROLE));
         String userid = String.valueOf(claims.get(ID));
-        //最关键的部分就是这里, 我们直接注入了
+        //注入角色权限信息
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
                 userid, null, List.of(() -> role)
         ));
+
+        //放入ThreadLocal
+        LocalInfo localInfo = new LocalInfo();
+        UserVo userVo = new UserVo();
+        userVo.setUserId(Long.valueOf(userid));
+        localInfo.setToken(token);
+        SessionLocal.setLocalInfo(localInfo);
+        SessionLocal.setUserInfo(userVo);
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

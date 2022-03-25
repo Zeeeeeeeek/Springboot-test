@@ -2,6 +2,8 @@ package com.zhejianglab.spring3web.interceptor;
 
 import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.utils.JwtUtil;
+import com.zhejianglab.spring3dao.vo.UserVo;
+import com.zhejianglab.spring3service.holder.SessionLocal;
 import com.zhejianglab.spring3service.redis.RedisKeyUtil;
 import com.zhejianglab.spring3service.redis.RedisUtil;
 import com.zhejianglab.spring3web.exception.CustomException;
@@ -30,15 +32,17 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Map<String, Object> claims = JwtUtil.getClaims(request.getHeader(HEADER_STRING));
-        String userId = String.valueOf(claims.get(ID));
+        String userId = String.valueOf(SessionLocal.getUserInfo().getUserId());
         if(!redisUtil.hasKey(RedisKeyUtil.userTokenKey(userId))){
             throw new CustomException(ResultCode.USER_NOT_LOGGED_IN);
         }
-        String current_refreshToken = (String) redisUtil.get(RedisKeyUtil.userTokenKey(userId));
-        if(!current_refreshToken.equals(request.getHeader(HEADER_STRING))){
+        String cachedToken = (String) redisUtil.get(RedisKeyUtil.userTokenKey(userId));
+        if(!cachedToken.equals(SessionLocal.getToken())){
             throw new CustomException(ResultCode.TOKEN_NO_ACCESS,"token已失效,请重新登录");
         }
+        String userKey = RedisKeyUtil.userInfo(userId);
+        UserVo userVo = (UserVo) redisUtil.get(userKey);
+        SessionLocal.setUserInfo(userVo);
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }
