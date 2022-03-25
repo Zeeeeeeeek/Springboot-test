@@ -6,6 +6,7 @@
         <module>spring3-web</module>
         <module>spring3-common</module>
         <module>spring3-dao</module>
+        <module>spring3-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
