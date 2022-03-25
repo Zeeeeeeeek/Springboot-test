@@ -1,6 +1,8 @@
 package com.zhejianglab.spring3web.config;
 
+import com.zhejianglab.spring3web.interceptor.LoginInterceptor;
 import com.zhejianglab.spring3web.interceptor.TimeConsumingInterceptor;
+import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -12,6 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Resource
+    private LoginInterceptor loginInterceptor;
 
     /**
      * 跨域
@@ -34,6 +39,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 // 不需拦截的URI配置
                 .excludePathPatterns("/swagger/**", "/static/**", "/resource/**");
+        registry.addInterceptor(loginInterceptor)
+                // 需拦截的URI配置
+                .addPathPatterns("/**")
+                // 不需拦截的URI配置
+                .excludePathPatterns("/swagger/**", "/static/**", "/resource/**","/auth/**","/test/**");
     }
 
     @Override

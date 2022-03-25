@@ -12,7 +12,7 @@ public class RedisKeyUtil {
 
     private final static String USER_REFRESH_TOKEN = "zhejiang:spring3:refreshToken:{0}";
 
-    private final static String USER_INFO = "zhejiang:spring3:{0}";
+    private final static String USER_INFO = "zhejiang:spring3:user:{0}";
 
     public static String userTokenKey(String userId) {
         return MessageFormat.format(USER_TOKEN,userId);

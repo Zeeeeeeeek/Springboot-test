@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -42,16 +43,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()  //允许跨域访问
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").authenticated() //配置那些url需要进行校验--所有请求都需要校验"/"
-                .antMatchers("/tool/**","/auth/**").permitAll()
-                //.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll();
-
+                //.antMatchers("/auth/**","/test/hello").permitAll()
                 .anyRequest().authenticated() //自定义校验类
                 .and()
-                .addFilterBefore(new JwtAuthorizationFilter(),
+                .addFilterAt(new JwtAuthorizationFilter(),
                         UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//关闭session
         ;
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/test/**","/auth/**");
     }
 }

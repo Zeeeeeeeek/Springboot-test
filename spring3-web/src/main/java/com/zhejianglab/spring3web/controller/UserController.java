@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhejianglab.spring3common.dto.DataList;
 import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3dao.entity.User;
+import com.zhejianglab.spring3service.redis.RedisKeyUtil;
+import com.zhejianglab.spring3service.redis.RedisUtil;
 import com.zhejianglab.spring3service.service.IUserService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -21,10 +23,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 
     @Resource
     private IUserService userService;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     @GetMapping("listByPage")
     public Result listByPage(@RequestParam(required = false,defaultValue = "1") Integer current,
@@ -37,6 +42,17 @@ public class UserController {
     public Result save(@RequestBody @Valid User user){
         user.setPassword(SecureUtil.md5(user.getPassword()));
         return Result.success(this.userService.saveOrUpdate(user));
+    }
+
+    @GetMapping("logout")
+    public Result logout(){
+        String key = RedisKeyUtil.userTokenKey(getUserId());
+        String refreshKey = RedisKeyUtil.userRefreshTokenKey(getUserId());
+        String userInfoKey = RedisKeyUtil.userInfo(getUserId());
+        redisUtil.del(key);
+        redisUtil.del(refreshKey);
+        redisUtil.del(userInfoKey);
+        return Result.success();
     }
 
 }
