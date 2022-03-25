@@ -16,4 +16,6 @@ public interface IUserService extends IService<User> {
 
     Page<User> selectByPage(Integer current, Integer pageSize);
 
+    User findByUserNameAndPass(String userName, String password);
+
 }

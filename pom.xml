@@ -31,6 +31,7 @@
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
+        <jjwt.version>0.9.1</jjwt.version>
     </properties>
 
     <dependencyManagement>
@@ -88,6 +89,12 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
 
         </dependencies>

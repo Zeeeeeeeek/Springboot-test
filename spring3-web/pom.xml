@@ -46,6 +46,10 @@
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <!--swagger 接口说明文档框架 3.0 M1 暂不支持-->
        <!-- <dependency>
             <groupId>io.springfox</groupId>

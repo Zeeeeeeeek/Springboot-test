@@ -2,7 +2,6 @@ package com.zhejianglab.spring3web.config;
 
 import com.zhejianglab.spring3web.interceptor.TimeConsumingInterceptor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
      * 跨域
      * @param registry
      */
-    @Override
+  /*  @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*")
@@ -26,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(false)
                 .maxAge(86400);
-    }
+    }*/
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

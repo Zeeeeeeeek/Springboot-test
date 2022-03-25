@@ -6,8 +6,8 @@ import lombok.Getter;
 import java.io.Serial;
 
 /**
- * @author shark
- * @since 2021/11/23
+ * @author chenze
+ * @since 2022/3/25
  */
 public class CustomException extends RuntimeException {
     @Serial

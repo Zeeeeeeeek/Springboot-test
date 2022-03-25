@@ -10,11 +10,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * <p> @Title OperateLogFilter
- * <p> @Description 操作日志记录
- *
- * @author ACGkaka
- * @date 2021/6/25 9:20
+ * @author chenze
+ * @date 2022/3/25
  */
 @Component
 @Slf4j

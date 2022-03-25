@@ -17,6 +17,7 @@ public enum ResultCode {
     PARAM_TYPE_BIND_ERROR(10003, "参数类型错误"),
     PARAM_NOT_COMPLETE(10004, "参数缺失"),
     PARAM_VALIDATE_ERROR(10005, "参数检验出错"),
+    PARAM_TOKEN_MISSING(10006, "Token不存在"),
 
     /* 用户错误：20001-29999*/
     USER_NOT_LOGGED_IN(20001, "用户未登录"),
@@ -45,7 +46,8 @@ public enum ResultCode {
     INTERFACE_EXCEED_LOAD(60006, "接口负载过高"),
 
     /* 权限错误：70001-79999 */
-    PERMISSION_NO_ACCESS(70001, "无访问权限");
+    PERMISSION_NO_ACCESS(70001, "无访问权限"),
+    TOKEN_NO_ACCESS(70002, "Token过期或无效的Token");
 
     @Getter
     private final Integer code;
