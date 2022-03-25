@@ -31,7 +31,7 @@
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
-        <jjwt.version>0.9.1</jjwt.version>
+        <httpclient.version>4.5.13</httpclient.version>
     </properties>
 
     <dependencyManagement>
@@ -92,9 +92,9 @@
             </dependency>
 
             <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
             </dependency>
 
         </dependencies>
