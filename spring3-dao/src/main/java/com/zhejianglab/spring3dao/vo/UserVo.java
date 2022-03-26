@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class UserVo {
-    private Long userId;
+    private Long id;
     private String userName;
     private String realName;
     private Integer roleType;

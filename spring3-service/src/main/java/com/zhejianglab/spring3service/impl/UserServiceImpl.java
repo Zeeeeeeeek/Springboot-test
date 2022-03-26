@@ -75,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public boolean logout() {
-        String userId = SessionLocal.getUserInfo().getUserId().toString();
+        String userId = SessionLocal.getUserInfo().getId().toString();
         String key = RedisKeyUtil.userTokenKey(userId);
         String refreshKey = RedisKeyUtil.userRefreshTokenKey(userId);
         String userInfoKey = RedisKeyUtil.userInfo(userId);

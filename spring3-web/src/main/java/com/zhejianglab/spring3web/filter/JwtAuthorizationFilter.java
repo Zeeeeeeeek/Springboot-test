@@ -56,7 +56,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         //放入ThreadLocal
         LocalInfo localInfo = new LocalInfo();
         UserVo userVo = new UserVo();
-        userVo.setUserId(Long.valueOf(userid));
+        userVo.setId(Long.valueOf(userid));
         localInfo.setToken(token);
         SessionLocal.setLocalInfo(localInfo);
         SessionLocal.setUserInfo(userVo);

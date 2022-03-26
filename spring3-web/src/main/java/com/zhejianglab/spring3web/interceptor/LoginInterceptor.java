@@ -53,7 +53,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     private void checkLogin() {
-        String userId = String.valueOf(SessionLocal.getUserInfo().getUserId());
+        String userId = String.valueOf(SessionLocal.getUserInfo().getId());
         if (!redisUtil.hasKey(RedisKeyUtil.userTokenKey(userId))) {
             throw new CustomException(ResultCode.USER_NOT_LOGGED_IN);
         }
