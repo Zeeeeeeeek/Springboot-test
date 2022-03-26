@@ -7,6 +7,6 @@ import lombok.Data;
  * @date 2022/3/25
  */
 @Data
-public class IdBean {
+public class IdDTO {
     private Integer id;
 }

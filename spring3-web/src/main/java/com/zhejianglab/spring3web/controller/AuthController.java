@@ -5,7 +5,7 @@ import com.zhejianglab.spring3common.Annotation.ApiOptions;
 import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.utils.JwtUtil;
-import com.zhejianglab.spring3dao.dto.RefreshTokenBean;
+import com.zhejianglab.spring3dao.dto.RefreshDTO;
 import com.zhejianglab.spring3dao.dto.UserDTO;
 import com.zhejianglab.spring3service.service.IUserService;
 import jakarta.annotation.Resource;
@@ -36,7 +36,7 @@ public class AuthController {
     @PostMapping("/refresh")
     @ApiOptions(login = false)
     @ResponseBody
-    public Result refresh(@RequestBody RefreshTokenBean refreshTokenBean) {
+    public Result refresh(@RequestBody RefreshDTO refreshTokenBean) {
         if (JwtUtil.validate(refreshTokenBean.getRefreshToken())) {
             return Result.success(this.userService.refresh(refreshTokenBean));
         }

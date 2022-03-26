@@ -8,7 +8,7 @@ import com.zhejianglab.spring3common.constant.Constants;
 import com.zhejianglab.spring3common.dto.DataList;
 import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3common.dto.ResultCode;
-import com.zhejianglab.spring3dao.dto.IdBean;
+import com.zhejianglab.spring3dao.dto.IdDTO;
 import com.zhejianglab.spring3dao.entity.User;
 import com.zhejianglab.spring3service.service.IUserService;
 import jakarta.annotation.Resource;
@@ -49,7 +49,7 @@ public class UserController {
     @PostMapping("delete")
     @ApiOptions
     @PreAuthorize("hasAuthority(" + Constants.ROLE_ADMIN + ")")
-    public Result delete(@RequestBody IdBean idBean) {
+    public Result delete(@RequestBody IdDTO idBean) {
         if (this.userService.delete(idBean.getId())) {
             return Result.success();
         }

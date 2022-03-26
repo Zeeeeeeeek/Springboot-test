@@ -10,7 +10,7 @@ import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.eunm.RoleEnums;
 import com.zhejianglab.spring3common.exception.CustomException;
 import com.zhejianglab.spring3common.utils.JwtUtil;
-import com.zhejianglab.spring3dao.dto.RefreshTokenBean;
+import com.zhejianglab.spring3dao.dto.RefreshDTO;
 import com.zhejianglab.spring3dao.dto.UserDTO;
 import com.zhejianglab.spring3dao.entity.User;
 import com.zhejianglab.spring3dao.mapper.UserMapper;
@@ -104,7 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public JwtVo refresh(RefreshTokenBean refreshTokenBean) {
+    public JwtVo refresh(RefreshDTO refreshTokenBean) {
         Map<String, Object> map = JwtUtil.getClaims(refreshTokenBean.getRefreshToken());
         String userId = (String) map.get(ID);
         String role = (String) map.get(ROLE);

@@ -2,7 +2,7 @@ package com.zhejianglab.spring3service.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhejianglab.spring3dao.dto.RefreshTokenBean;
+import com.zhejianglab.spring3dao.dto.RefreshDTO;
 import com.zhejianglab.spring3dao.dto.UserDTO;
 import com.zhejianglab.spring3dao.entity.User;
 import com.zhejianglab.spring3dao.vo.JwtVo;
@@ -29,6 +29,6 @@ public interface IUserService extends IService<User> {
 
     JwtVo login(UserDTO userDTO);
 
-    JwtVo refresh(RefreshTokenBean refreshTokenBean);
+    JwtVo refresh(RefreshDTO refreshTokenBean);
 
 }
