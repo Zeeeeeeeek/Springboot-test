@@ -1,6 +1,7 @@
 package com.zhejianglab.spring3web.controller;
 
 import cn.hutool.crypto.SecureUtil;
+import com.zhejianglab.spring3common.Annotation.ApiOptions;
 import com.zhejianglab.spring3common.dto.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ToolController {
 
     @GetMapping("enpt")
-    public Result enpt(String password){
+    @ApiOptions(login = false)
+    public Result enpt(String password) {
         return Result.success(SecureUtil.md5(password));
     }
 }

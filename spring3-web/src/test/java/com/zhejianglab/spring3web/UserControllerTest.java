@@ -28,8 +28,8 @@ public class UserControllerTest {
     public void should_check_person_value() throws Exception {
         User user = User.builder().userName("spring3").realName("test3").roleType(1).password("123456").build();
         mockMvc.perform(post("/user/save")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)));
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user)));
 
     }
 }

@@ -14,6 +14,10 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.fill.Column;
 
+/**
+ * @author chenze
+ * @date 2022/3/26
+ */
 public class CodeGenerator {
 
     public static void main(String[] args) {
@@ -41,7 +45,7 @@ public class CodeGenerator {
 
         // 包配置，如模块名、实体、mapper、service、controller等
         PackageConfig.Builder packageConfigBuilder = new PackageConfig.Builder();
-       // packageConfigBuilder.moduleName("code");
+        // packageConfigBuilder.moduleName("code");
         packageConfigBuilder.parent("com.zhejianglab");
         packageConfigBuilder.entity("entity");
         packageConfigBuilder.mapper("mapper");
@@ -63,7 +67,7 @@ public class CodeGenerator {
         //strategyConfigBuilder.addTablePrefix("t_");
         // -------------------- Entity 策略配置
         // 主键生成策略
-         strategyConfigBuilder.entityBuilder().idType(IdType.INPUT);
+        strategyConfigBuilder.entityBuilder().idType(IdType.INPUT);
         // 下划线转驼峰
         strategyConfigBuilder.entityBuilder().naming(NamingStrategy.underline_to_camel);
         strategyConfigBuilder.entityBuilder().columnNaming(NamingStrategy.underline_to_camel);
@@ -77,10 +81,10 @@ public class CodeGenerator {
         strategyConfigBuilder.entityBuilder().enableTableFieldAnnotation();
         // 逻辑删除
         //strategyConfigBuilder.entityBuilder().logicDeleteColumnName("deleted");
-     //   strategyConfigBuilder.entityBuilder().logicDeletePropertyName("deleted");
+        //   strategyConfigBuilder.entityBuilder().logicDeletePropertyName("deleted");
         // 乐观锁
-       // strategyConfigBuilder.entityBuilder().versionColumnName("version");
-       // strategyConfigBuilder.entityBuilder().versionPropertyName("version");
+        // strategyConfigBuilder.entityBuilder().versionColumnName("version");
+        // strategyConfigBuilder.entityBuilder().versionPropertyName("version");
         // 自动填充
         IFill createTime = new Column("create_time", FieldFill.INSERT);
         IFill updateTime = new Column("update_time", FieldFill.INSERT_UPDATE);

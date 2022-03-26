@@ -3,12 +3,10 @@ package com.zhejianglab.spring3web.controller;
 
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhejianglab.spring3common.Annotation.ApiOptions;
 import com.zhejianglab.spring3common.dto.DataList;
 import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3dao.entity.User;
-import com.zhejianglab.spring3service.holder.SessionLocal;
-import com.zhejianglab.spring3service.redis.RedisKeyUtil;
-import com.zhejianglab.spring3service.redis.RedisUtil;
 import com.zhejianglab.spring3service.service.IUserService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -24,37 +22,30 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController{
+public class UserController {
 
     @Resource
     private IUserService userService;
 
-    @Resource
-    private RedisUtil redisUtil;
-
     @GetMapping("listByPage")
-    public Result listByPage(@RequestParam(required = false,defaultValue = "1") Integer current,
-                             @RequestParam(required = false,defaultValue = "20") Integer pageSize){
-        Page<User> page = this.userService.selectByPage(current,pageSize);
-        return Result.success(new DataList<>(page.getTotal(),page.getRecords()));
+    @ApiOptions
+    public Result listByPage(@RequestParam(required = false, defaultValue = "1") Integer current,
+                             @RequestParam(required = false, defaultValue = "20") Integer pageSize) {
+        Page<User> page = this.userService.selectByPage(current, pageSize);
+        return Result.success(new DataList<>(page.getTotal(), page.getRecords()));
     }
 
     @PostMapping("save")
-    public Result save(@RequestBody @Valid User user){
+    @ApiOptions
+    public Result save(@RequestBody @Valid User user) {
         user.setPassword(SecureUtil.md5(user.getPassword()));
-        return Result.success(this.userService.saveOrUpdate(user));
+        return Result.success(this.userService.save(user));
     }
 
     @GetMapping("logout")
-    public Result logout(){
-        String userId = SessionLocal.getUserInfo().getUserId().toString();
-        String key = RedisKeyUtil.userTokenKey(userId);
-        String refreshKey = RedisKeyUtil.userRefreshTokenKey(userId);
-        String userInfoKey = RedisKeyUtil.userInfo(userId);
-        redisUtil.del(key);
-        redisUtil.del(refreshKey);
-        redisUtil.del(userInfoKey);
-        return Result.success();
+    @ApiOptions
+    public Result logout() {
+        return Result.success(this.userService.logout());
     }
 
 }

@@ -25,6 +25,7 @@ public class JwtUtil {
 
     /**
      * 生成JWT Token
+     *
      * @param userRole
      * @param userid
      * @param date
@@ -36,6 +37,7 @@ public class JwtUtil {
 
     /**
      * 生成Refresh Token
+     *
      * @param userRole
      * @param userid
      * @param date
@@ -47,6 +49,7 @@ public class JwtUtil {
 
     /**
      * 令牌环校验
+     *
      * @param token
      * @return
      */
@@ -56,6 +59,7 @@ public class JwtUtil {
 
     /**
      * 获取body
+     *
      * @param token
      * @return
      */

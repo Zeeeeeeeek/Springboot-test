@@ -19,7 +19,8 @@ public class Result implements Serializable {
 
     private Object data;
 
-    public Result() {}
+    public Result() {
+    }
 
     public Result(Integer code, String msg) {
         this.code = code;

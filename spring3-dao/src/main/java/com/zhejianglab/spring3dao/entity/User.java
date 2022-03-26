@@ -62,7 +62,7 @@ public class User implements Serializable {
      * 用户密码
      */
     @TableField("password")
-    @Length(max = 10,message = "密码长度不能超过10")
+    @Length(max = 10, message = "密码长度不能超过10")
     private String password;
 
     /**

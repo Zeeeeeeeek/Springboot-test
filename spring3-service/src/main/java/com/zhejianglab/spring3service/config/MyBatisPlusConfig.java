@@ -9,11 +9,15 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 自定义 MybatisPlus 配置类，配置分页插件
  * mapper 扫描也可在此写上
+ *
+ * @author chenze
+ * @date 2022/3/26
  */
 @Configuration
 public class MyBatisPlusConfig {
     /**
      * 注册分页插件
+     *
      * @return 实例
      */
     @Bean

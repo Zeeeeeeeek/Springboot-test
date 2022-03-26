@@ -11,7 +11,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-//在真实开发中，经常使用
+/**
+ * @author chenze
+ * @date 2022/3/26
+ */
 @Component
 public final class RedisUtil {
 
@@ -562,14 +565,14 @@ public final class RedisUtil {
     /**
      * 移除N个值为value
      *
-     * @param key 键
+     * @param key   键
      * @param count 移除多少个
      * @param value 值
      * @return 移除的个数
      */
-    public long lRemove (String key,long count, Object value){
+    public long lRemove(String key, long count, Object value) {
         try {
-            Long remove = redisTemplate.opsForList().remove(key, count,value);
+            Long remove = redisTemplate.opsForList().remove(key, count, value);
             return remove;
         } catch (Exception e) {
             e.printStackTrace();

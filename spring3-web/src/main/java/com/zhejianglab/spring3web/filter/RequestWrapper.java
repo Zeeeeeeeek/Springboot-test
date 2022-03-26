@@ -8,16 +8,19 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 /**
- *
  * @author chenze
  * @date 2022/3/25
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
 
-    /** 每次读取8kb */
+    /**
+     * 每次读取8kb
+     */
     private static final int BUFFER_SIZE = 1024 * 8;
 
-    /** 请求体 */
+    /**
+     * 请求体
+     */
     private final String body;
 
     /**
@@ -29,7 +32,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         StringWriter writer = new StringWriter();
         int read;
         char[] buf = new char[BUFFER_SIZE];
-        while( ( read = reader.read(buf) ) != -1 ) {
+        while ((read = reader.read(buf)) != -1) {
             writer.write(buf, 0, read);
         }
         this.body = writer.getBuffer().toString();
@@ -45,7 +48,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     }
 
     @Override
-    public ServletInputStream getInputStream()  {
+    public ServletInputStream getInputStream() {
         final ByteArrayInputStream bais = new ByteArrayInputStream(body.getBytes());
         return new ServletInputStream() {
 
@@ -65,14 +68,14 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             }
 
             @Override
-            public int read(){
+            public int read() {
                 return bais.read();
             }
         };
     }
 
     @Override
-    public BufferedReader getReader(){
+    public BufferedReader getReader() {
         return new BufferedReader(new InputStreamReader(this.getInputStream()));
     }
 

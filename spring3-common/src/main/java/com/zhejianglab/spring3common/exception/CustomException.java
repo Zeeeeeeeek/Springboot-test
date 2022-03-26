@@ -1,4 +1,4 @@
-package com.zhejianglab.spring3web.exception;
+package com.zhejianglab.spring3common.exception;
 
 import com.zhejianglab.spring3common.dto.ResultCode;
 import lombok.Getter;

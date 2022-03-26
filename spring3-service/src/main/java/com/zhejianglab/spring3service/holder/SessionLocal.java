@@ -3,6 +3,10 @@ package com.zhejianglab.spring3service.holder;
 import com.zhejianglab.spring3dao.vo.UserVo;
 import lombok.Data;
 
+/**
+ * @author chenze
+ * @date 2022/3/26
+ */
 @Data
 public class SessionLocal {
 
@@ -10,48 +14,53 @@ public class SessionLocal {
 
     /**
      * 设置local info
+     *
      * @param localInfo
      */
-    public static void setLocalInfo(LocalInfo localInfo){
+    public static void setLocalInfo(LocalInfo localInfo) {
         local.set(localInfo);
     }
 
     /**
      * 设置用户信息
+     *
      * @param userVo
      */
-    public static void setUserInfo(UserVo userVo){
+    public static void setUserInfo(UserVo userVo) {
         getLocalInfo().setUserVo(userVo);
     }
 
     /**
      * 获取local info
+     *
      * @return
      */
-    public static LocalInfo getLocalInfo(){
+    public static LocalInfo getLocalInfo() {
         return local.get();
     }
 
     /**
      * 获取用户信息
+     *
      * @return
      */
-    public static UserVo getUserInfo(){
+    public static UserVo getUserInfo() {
         return getLocalInfo().getUserVo();
     }
 
     /**
      * 获取token
+     *
      * @return
      */
-    public static String getToken(){
+    public static String getToken() {
         return getLocalInfo().getToken();
     }
 
     /**
      * 删除存储信息
      */
-    public static void remove(){
+    public static void remove() {
         local.remove();
     }
 

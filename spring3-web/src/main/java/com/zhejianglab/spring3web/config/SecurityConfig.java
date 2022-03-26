@@ -1,5 +1,6 @@
 package com.zhejianglab.spring3web.config;
 
+import com.zhejianglab.spring3common.constant.Constants;
 import com.zhejianglab.spring3web.filter.JwtAuthorizationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 
 /**
@@ -29,7 +30,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -40,8 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return firewall;
     }
 
+    /**
+     * 跨域参数配置
+     *
+     * @return
+     */
     @Bean
-    public CorsFilter corsFilter() {
+    public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOriginPattern("*");
@@ -49,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowCredentials(false);
         source.registerCorsConfiguration("/**", corsConfiguration);
-        return new CorsFilter(source);
+        return source;
     }
 
 
@@ -59,18 +65,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()  //允许跨域访问
                 .and()
                 .authorizeRequests()
-                //.antMatchers("/auth/**","/test/hello").permitAll()
-                .anyRequest().authenticated() //自定义校验类
+                //.antMatchers(SKIP_JWT_AUTHORIZATION_PATH).permitAll() //此处放行针仅对角色权限
+                .anyRequest().authenticated()
                 .and()
                 .addFilterAt(new JwtAuthorizationFilter(),
-                        UsernamePasswordAuthenticationFilter.class)
+                        UsernamePasswordAuthenticationFilter.class) //自定义校验类
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//关闭session
         ;
     }
 
+    /**
+     * 配置放行路径，跳过jwt 与 SpringSecurity 验证
+     *
+     * @param web
+     */
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/test/**","/auth/**");
+        web.ignoring().antMatchers(Constants.SKIP_JWT_AUTHORIZATION_PATH);
     }
 }

@@ -5,10 +5,10 @@ import lombok.Data;
 
 /**
  * @author chenze
- * @since 2022-03-24
+ * @date 2022/3/26
  */
 @Data
-public class UserDTO{
+public class UserDTO {
 
     @NotNull(message = "用户名不能为空")
     private String userName;
