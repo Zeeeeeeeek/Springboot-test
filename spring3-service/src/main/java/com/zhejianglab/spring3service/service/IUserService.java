@@ -23,6 +23,8 @@ public interface IUserService extends IService<User> {
 
     boolean save(User user);
 
+    boolean delete(Integer id);
+
     boolean logout();
 
     JwtVo login(UserDTO userDTO);

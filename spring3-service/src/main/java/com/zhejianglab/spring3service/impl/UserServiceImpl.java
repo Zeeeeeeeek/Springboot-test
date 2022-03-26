@@ -2,6 +2,7 @@ package com.zhejianglab.spring3service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhejianglab.spring3common.constant.Constants;
@@ -68,6 +69,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    public boolean delete(Integer id) {
+        return this.update(new UpdateWrapper<User>().lambda().set(User::getStatus, Constants.USER_INVALID));
+    }
+
+    @Override
     public boolean logout() {
         String userId = SessionLocal.getUserInfo().getUserId().toString();
         String key = RedisKeyUtil.userTokenKey(userId);
@@ -94,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         UserVo userVo = new UserVo();
         BeanUtil.copyProperties(user, userVo);
         redisUtil.set(userKey, userVo);
-        return generateJwt(key, refreshKey, String.valueOf(user.getId()), RoleEnums.parse(user.getRoleType()).toString());
+        return generateJwt(key, refreshKey, String.valueOf(user.getId()), RoleEnums.parse(user.getRoleType()).getValue());
     }
 
     @Override

@@ -7,16 +7,18 @@ package com.zhejianglab.spring3common.eunm;
  */
 public enum RoleEnums {
 
-    UNKNOWN(-1, "不存在该角色"),
-    ADMIN(0, "超级管理员"),
-    NORMAL(1, "一般人员"),
-    SUPPORT(2, "支撑人员");
+    UNKNOWN(-1, "UNKNOWN", "不存在该角色"),
+    ADMIN(0, "ADMIN", "超级管理员"),
+    NORMAL(1, "NORMAL", "一般人员"),
+    SUPPORT(2, "SUPPORT", "支撑人员");
 
-    private Integer type;
-    private String description;
+    private final Integer type;
+    private final String value;
+    private final String description;
 
-    RoleEnums(Integer type, String description) {
+    RoleEnums(Integer type, String value, String description) {
         this.type = type;
+        this.value = value;
         this.description = description;
     }
 
@@ -30,12 +32,26 @@ public enum RoleEnums {
         return RoleEnums.UNKNOWN;
     }
 
+    public static RoleEnums parseByValue(String value) {
+        RoleEnums[] values = RoleEnums.values();
+        for (RoleEnums enums : values) {
+            if (enums.getValue().equals(value)) {
+                return enums;
+            }
+        }
+        return RoleEnums.UNKNOWN;
+    }
+
     public Integer getType() {
         return this.type;
     }
 
     public String getDescription() {
         return this.description;
+    }
+
+    public String getValue() {
+        return this.value;
     }
 
 }
