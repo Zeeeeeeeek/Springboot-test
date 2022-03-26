@@ -48,7 +48,7 @@ public class UserController {
 
     @PostMapping("delete")
     @ApiOptions
-    @PreAuthorize("hasAuthority(" + Constants.ROLE_ADMIN + ")")
+    @PreAuthorize("hasAuthority(" + Constants.ROLE_SUPPORT + ")")
     public Result delete(@RequestBody IdDTO idBean) {
         if (this.userService.delete(idBean.getId())) {
             return Result.success();
