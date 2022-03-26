@@ -12,7 +12,6 @@ import java.util.Map;
  * @author chenze
  * @date 2022/3/25
  */
-@Slf4j
 public class JwtUtil {
     public static final long EXPIRATION_TIME = 15 * 60 * 1000L;// 令牌环有效期 15 min
     public static final long REFRESH_TIME = 60 * 60 * 1000L;// 续期60 min
