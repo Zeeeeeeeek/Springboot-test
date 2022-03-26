@@ -65,10 +65,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()  //允许跨域访问
                 .and()
                 .authorizeRequests()
-                //.antMatchers(SKIP_JWT_AUTHORIZATION_PATH).permitAll() //此处放行针仅对角色权限
+                //.antMatchers(Constants.SKIP_JWT_AUTHORIZATION_PATH).permitAll() //此处放行针仅对角色权限
                 .anyRequest().authenticated()
                 .and()
-                .addFilterAt(new JwtAuthorizationFilter(),
+                .addFilterBefore(new JwtAuthorizationFilter(),
                         UsernamePasswordAuthenticationFilter.class) //自定义校验类
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//关闭session

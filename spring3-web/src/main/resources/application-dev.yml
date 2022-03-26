@@ -34,3 +34,13 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/xml/*.xml
+
+async:
+  executor:
+    thread:
+      core_pool_size: 5 # 配置核心线程数
+      max_pool_size: 5 # 配置最大线程数
+      queue_capacity: 999 # 配置队列大小
+      keep_alive_seconds: 30 # 配置线程最大空闲时间
+      name:
+        prefix: spirng3-async- # 配置线程池中的线程的名称前缀

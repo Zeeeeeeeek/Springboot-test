@@ -5,7 +5,11 @@ import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.exception.CustomException;
 import com.zhejianglab.spring3service.redis.RedisUtil;
+import com.zhejianglab.spring3service.service.AsyncService;
 import jakarta.annotation.Resource;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +22,14 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping("test")
+@Slf4j
 public class TestController {
 
     @Resource
     private RedisUtil redisUtil;
+
+    @Resource
+    private AsyncService asyncService;
 
     @GetMapping("hello")
     @ApiOptions(login = false)
@@ -49,6 +57,14 @@ public class TestController {
             throw new CustomException(ResultCode.INTERFACE_FORBID_VISIT);
         }
         return Result.success();
+    }
+
+    @GetMapping("async")
+    @ApiOptions(login = false)
+    @SneakyThrows
+    public Result Async(){
+        asyncService.executeAsync();
+        return Result.success("直接返回");
     }
 
 }
