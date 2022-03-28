@@ -29,8 +29,11 @@ public class ScheduleJobService {
     @Resource
     private Scheduler scheduler;
 
+
     /**
      * 程序启动开始加载全部定时任务
+     *
+     * @throws SchedulerException
      */
     public void startJob() throws SchedulerException {
         List<Task> taskList = this.taskService.getAllCronTask();
@@ -53,10 +56,12 @@ public class ScheduleJobService {
         }
     }
 
+
     /**
      * 停止任务
      *
      * @param taskId
+     * @throws SchedulerException
      */
     public void stopJob(String taskId) throws SchedulerException {
         scheduler.pauseJob(JobKey.jobKey(taskId));
@@ -78,7 +83,7 @@ public class ScheduleJobService {
      * 添加新的job
      *
      * @param taskId
-     * @throws SchedulerConfigException
+     * @throws SchedulerException
      */
     public void addJob(String taskId) throws SchedulerException {
         Task task = this.taskService.getTaskByTaskId(taskId);
@@ -104,7 +109,7 @@ public class ScheduleJobService {
     /**
      * 重新加载job执行计划
      *
-     * @throws Exception
+     * @throws SchedulerException
      */
     public void reload(String taskId) throws SchedulerException {
         Task task = this.taskService.getTaskByTaskId(taskId);
@@ -129,7 +134,6 @@ public class ScheduleJobService {
      *
      * @param task
      * @return
-     * @throws ClassNotFoundException
      */
     private JobDetail getJobDetail(Task task)  {
 
@@ -153,13 +157,11 @@ public class ScheduleJobService {
      * @return
      */
     private CronTrigger getCronTrigger(Task task){
-        CronTrigger cronTrigger;
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(task.getCron());
-        cronTrigger = TriggerBuilder.newTrigger()
+        return TriggerBuilder.newTrigger()
                 .withIdentity(TriggerKey.triggerKey(task.getTaskId()))
                 .withSchedule(cronScheduleBuilder)
                 .build();
-        return cronTrigger;
     }
 
     /**
@@ -182,7 +184,6 @@ public class ScheduleJobService {
      * 将job注入scheduler
      *
      * @param task
-     * @throws ClassNotFoundException
      * @throws SchedulerException
      */
     private void InjectJob(Task task) throws SchedulerException {
