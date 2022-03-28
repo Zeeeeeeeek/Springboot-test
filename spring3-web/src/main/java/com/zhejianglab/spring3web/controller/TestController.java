@@ -6,10 +6,10 @@ import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.exception.CustomException;
 import com.zhejianglab.spring3service.redis.RedisUtil;
 import com.zhejianglab.spring3service.service.AsyncService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/3/23
  */
 @RestController
+@Tag(name = "测试控制器", description = "功能测试")
 @RequestMapping("test")
 @Slf4j
 public class TestController {

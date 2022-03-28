@@ -45,3 +45,9 @@ async:
       keep_alive_seconds: 30 # 配置线程最大空闲时间
       name:
         prefix: spirng3-async- # 配置线程池中的线程的名称前缀
+
+springdoc:
+  packagesToScan: com.zhejianglab.spring3web.controller
+  swagger-ui:
+    disable-swagger-default-url: off
+    enabled: true

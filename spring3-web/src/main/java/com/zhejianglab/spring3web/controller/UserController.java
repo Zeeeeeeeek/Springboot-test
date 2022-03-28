@@ -11,6 +11,8 @@ import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3dao.dto.IdDTO;
 import com.zhejianglab.spring3dao.entity.User;
 import com.zhejianglab.spring3service.service.IUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2022-03-24
  */
 @RestController
+@Tag(name = "用户控制器", description = "用户相关操作")
 @RequestMapping("/user")
 public class UserController {
 
@@ -32,6 +35,7 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping("listByPage")
+    @Operation(description = "列表查询")
     @ApiOptions
     public Result listByPage(@RequestParam(required = false, defaultValue = "1") Integer current,
                              @RequestParam(required = false, defaultValue = "20") Integer pageSize) {
@@ -40,6 +44,7 @@ public class UserController {
     }
 
     @PostMapping("save")
+    @Operation(description = "保存更新用户")
     @ApiOptions
     public Result save(@RequestBody @Valid User user) {
         user.setPassword(SecureUtil.md5(user.getPassword()));
@@ -47,6 +52,7 @@ public class UserController {
     }
 
     @PostMapping("delete")
+    @Operation(description = "删除用户")
     @ApiOptions
     @PreAuthorize("hasAuthority(" + Constants.ROLE_SUPPORT + ")")
     public Result delete(@RequestBody IdDTO idBean) {
@@ -57,6 +63,7 @@ public class UserController {
     }
 
     @GetMapping("logout")
+    @Operation(description = "登出")
     @ApiOptions
     public Result logout() {
         return Result.success(this.userService.logout());

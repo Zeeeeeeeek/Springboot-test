@@ -13,6 +13,6 @@ public class Constants {
     public static final String ROLE_NORMAL = "'NORMAL'";
     public static final String ROLE_SUPPORT = "'SUPPORT'";
 
-    public static final String[] SKIP_JWT_AUTHORIZATION_PATH = {"/auth/**", "/tool/**", "/test/**"};
-    public static final String[] INTERCEPTOR_EXCLUDE_PATH = {"/swagger/**", "/static/**", "/resource/**"};
+    public static final String[] SKIP_JWT_AUTHORIZATION_PATH = {"/auth/**", "/tool/**", "/test/**","/swagger-ui/**","/v3/**","/swagger-ui.html"};
+    public static final String[] INTERCEPTOR_EXCLUDE_PATH = {"/swagger-ui/**", "/static/**", "/resource/**","/v3/**"};
 }

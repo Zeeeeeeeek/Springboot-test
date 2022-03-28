@@ -41,7 +41,7 @@ public class CodeGenerator {
         // 是否覆盖旧的文件
         //globalConfigBuilder.fileOverride();
         // 实体属性Swagger2注解
-        //globalConfigBuilder.enableSwagger();
+        globalConfigBuilder.enableSwagger();
 
         // 包配置，如模块名、实体、mapper、service、controller等
         PackageConfig.Builder packageConfigBuilder = new PackageConfig.Builder();
