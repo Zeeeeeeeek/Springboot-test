@@ -1,18 +1,15 @@
 package com.zhejianglab.spring3dao.generator;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.IFill;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.fill.Column;
 
 /**
  * @author chenze
@@ -58,7 +55,8 @@ public class CodeGenerator {
         // 设置需要映射的表名
         strategyConfigBuilder.addInclude(
                 "user",
-                "role"
+                "role",
+                "task"
                 // , "t_anniversary"
                 // , "t_gallery"
                 // , "t_share"
@@ -86,9 +84,9 @@ public class CodeGenerator {
         // strategyConfigBuilder.entityBuilder().versionColumnName("version");
         // strategyConfigBuilder.entityBuilder().versionPropertyName("version");
         // 自动填充
-        IFill createTime = new Column("create_time", FieldFill.INSERT);
-        IFill updateTime = new Column("update_time", FieldFill.INSERT_UPDATE);
-        strategyConfigBuilder.entityBuilder().addTableFills(createTime, updateTime);
+       // IFill createTime = new Column("create_time", FieldFill.INSERT);
+       // IFill updateTime = new Column("update_time", FieldFill.INSERT_UPDATE);
+       // strategyConfigBuilder.entityBuilder().addTableFills(createTime, updateTime);
         // -------------------- Controller 策略配置
         // 设置父类
         // strategyConfigBuilder.controllerBuilder().superClass(Class<BaseController.class>);

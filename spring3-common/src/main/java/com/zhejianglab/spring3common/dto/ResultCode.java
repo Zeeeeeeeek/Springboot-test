@@ -28,6 +28,9 @@ public enum ResultCode {
 
     /* 业务错误：30001-39999 */
     SPECIFIED_QUESTIONED_USER_NOT_EXIST(30001, "某业务出现问题"),
+    SCHEDULE_TASK_CLASS_NOT_FOUND(30002,"任务类未找到"),
+    SCHEDULE_CONFIG_NOT_FOUND(30003,"未找到相关Job配置"),
+    SCHEDULE_DISPATCH_ERROR(30004,"定时任务调度出错"),
 
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
@@ -48,6 +51,7 @@ public enum ResultCode {
     /* 权限错误：70001-79999 */
     PERMISSION_NO_ACCESS(70001, "无访问权限"),
     TOKEN_NO_ACCESS(70002, "Token过期或无效的Token");
+
 
     @Getter
     private final Integer code;

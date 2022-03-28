@@ -5,6 +5,7 @@ import com.zhejianglab.spring3common.dto.Result;
 import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.SchedulerException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -50,7 +51,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     public Result handleAccessDeniedException(AccessDeniedException ex) {
         log.error("权限校验出错: {}", ex.getMessage());
-        return Result.failure(ResultCode.PERMISSION_NO_ACCESS);
+        return Result.failure(ResultCode.PERMISSION_NO_ACCESS,ex.getMessage());
+    }
+
+    @ExceptionHandler(value = SchedulerException.class)
+    public Result handleSchedulerException(SchedulerException ex) {
+        log.error("定时任务调度出错: {}", ex.getMessage());
+        return Result.failure(ResultCode.SCHEDULE_DISPATCH_ERROR,ex.getMessage());
     }
 
 
