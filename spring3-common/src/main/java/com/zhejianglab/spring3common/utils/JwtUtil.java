@@ -1,7 +1,6 @@
 package com.zhejianglab.spring3common.utils;
 
 import cn.hutool.jwt.JWT;
-import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

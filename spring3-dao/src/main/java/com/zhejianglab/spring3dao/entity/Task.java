@@ -1,8 +1,12 @@
 package com.zhejianglab.spring3dao.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +35,7 @@ public class Task implements Serializable {
 
     @Schema(name = "任务id")
     @TableField("task_id")
+    @NotNull(message = "任务id不能为空")
     private String taskId;
 
     @Schema(name = "cron表达式")
@@ -39,10 +44,12 @@ public class Task implements Serializable {
 
     @Schema(name = "job引用地址")
     @TableField("class_name")
+    @NotNull(message = "任务class不能为空")
     private String className;
 
     @Schema(name = "描述")
     @TableField("description")
+    @NotNull(message = "描述不能为空")
     private String description;
 
     @Schema(name = "定时任务状态 0 停用,1启用")
@@ -51,6 +58,7 @@ public class Task implements Serializable {
 
     @Schema(name = "任务执行类型:  0单次执行 1 循环执行")
     @TableField("task_type")
+    @NotNull(message = "任务执行类型不能为空")
     private Integer taskType;
 
     @Schema(name = "单次任务启动时间")
