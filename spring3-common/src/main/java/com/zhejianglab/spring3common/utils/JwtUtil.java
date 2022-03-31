@@ -1,6 +1,8 @@
 package com.zhejianglab.spring3common.utils;
 
+import cn.hutool.core.exceptions.ValidateException;
 import cn.hutool.jwt.JWT;
+import cn.hutool.jwt.JWTValidator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -52,7 +54,12 @@ public class JwtUtil {
      * @return
      */
     public static Boolean validate(String token) {
-        return JWT.of(token.replace(TOKEN_PREFIX + " ", "")).setKey(SECRET).verify();
+        try {
+            JWTValidator.of(token.replace(TOKEN_PREFIX + " ", "")).validateDate();
+            return  JWT.of(token.replace(TOKEN_PREFIX + " ", "")).setKey(SECRET).verify();
+        }catch (ValidateException e){
+            return false;
+        }
     }
 
     /**
