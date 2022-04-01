@@ -76,14 +76,14 @@ public class UserController extends UserExcel {
 
     @GetMapping("export")
     @Operation(description = "导出")
-    @ApiOptions(login = false)
+    @ApiOptions
     public void excelExport() {
         normalExcelExport(this.userService.list());
     }
 
     @PostMapping("import")
     @Operation(description = "导入")
-    @ApiOptions(login = false)
+    @ApiOptions
     public Result excelImport(@RequestParam MultipartFile file) throws IOException {
         List<User> list = excelImport(file.getInputStream());
         return Result.success(this.userService.saveBatch(list));
