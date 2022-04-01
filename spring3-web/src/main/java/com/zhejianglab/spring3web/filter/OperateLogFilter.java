@@ -31,8 +31,8 @@ public class OperateLogFilter implements Filter {
             int requestId = Sequence.nextValue();
             servletRequest.setAttribute("_UUID", requestId);
             String requestBody;
-            if (servletRequest.getContentType().contains(Constants.MULTIPART_CONTENT_TYPE)) {
-                //当content 为 multipart/form-data 时，暂时无法解决流重复读取的问题
+            if (servletRequest.getContentType().startsWith(Constants.MULTIPART_CONTENT_TYPE)) {
+                //在遇到 multipart/form-data时放行
                 requestBody = Constants.MULTIPART_CONTENT_TYPE_BODY;
                 log.info("RequestId: {} URL: {} Body:{}", requestId, ((HttpServletRequest) servletRequest).getRequestURL().toString(), requestBody);
                 filterChain.doFilter(servletRequest, servletResponse);
