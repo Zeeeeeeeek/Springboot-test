@@ -26,13 +26,14 @@ public class ScheduleJobConfig {
     private JobFactory jobFactory;
 
     @Bean("schedulerFactoryBean")
-    public SchedulerFactoryBean createFactoryBean(){
+    public SchedulerFactoryBean createFactoryBean() {
         SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
         factoryBean.setJobFactory(jobFactory);
         factoryBean.setTaskExecutor(asyncServiceExecutor);
         factoryBean.setOverwriteExistingJobs(true);
         return factoryBean;
     }
+
     //通过这个类对定时任务进行操作
     @Bean
     public Scheduler scheduler(@Qualifier("schedulerFactoryBean") SchedulerFactoryBean factoryBean) {

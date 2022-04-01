@@ -6,6 +6,7 @@ import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3common.exception.CustomException;
 import com.zhejianglab.spring3service.redis.RedisUtil;
 import com.zhejianglab.spring3service.service.AsyncService;
+import com.zhejianglab.spring3service.service.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
@@ -31,6 +32,9 @@ public class TestController {
 
     @Resource
     private AsyncService asyncService;
+
+    @Resource
+    private IUserService userService;
 
     @GetMapping("hello")
     @ApiOptions(login = false)
@@ -63,9 +67,8 @@ public class TestController {
     @GetMapping("async")
     @ApiOptions(login = false)
     @SneakyThrows
-    public Result Async(){
+    public Result Async() {
         asyncService.executeAsync();
         return Result.success("直接返回");
     }
-
 }

@@ -51,13 +51,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     public Result handleAccessDeniedException(AccessDeniedException ex) {
         log.error("权限校验出错: {}", ex.getMessage());
-        return Result.failure(ResultCode.PERMISSION_NO_ACCESS,ex.getMessage());
+        return Result.failure(ResultCode.PERMISSION_NO_ACCESS, ex.getMessage());
     }
 
     @ExceptionHandler(value = SchedulerException.class)
     public Result handleSchedulerException(SchedulerException ex) {
         log.error("定时任务调度出错: {}", ex.getMessage());
-        return Result.failure(ResultCode.SCHEDULE_DISPATCH_ERROR,ex.getMessage());
+        return Result.failure(ResultCode.SCHEDULE_DISPATCH_ERROR, ex.getMessage());
     }
 
 

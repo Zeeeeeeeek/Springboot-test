@@ -16,9 +16,9 @@ public class AsyncServiceImpl implements AsyncService {
     @Override
     @Async("asyncServiceExecutor")
     public void executeAsync() {
-        log.info("start executeAsync :{}",Thread.currentThread().getName());
+        log.info("start executeAsync :{}", Thread.currentThread().getName());
         System.out.println("异步线程要做的事情");
         System.out.println("可以在这里执行批量插入等耗时的事情");
-        log.info("end executeAsync :{}",Thread.currentThread().getName());
+        log.info("end executeAsync :{}", Thread.currentThread().getName());
     }
 }

@@ -84,9 +84,9 @@ public class CodeGenerator {
         // strategyConfigBuilder.entityBuilder().versionColumnName("version");
         // strategyConfigBuilder.entityBuilder().versionPropertyName("version");
         // 自动填充
-       // IFill createTime = new Column("create_time", FieldFill.INSERT);
-       // IFill updateTime = new Column("update_time", FieldFill.INSERT_UPDATE);
-       // strategyConfigBuilder.entityBuilder().addTableFills(createTime, updateTime);
+        // IFill createTime = new Column("create_time", FieldFill.INSERT);
+        // IFill updateTime = new Column("update_time", FieldFill.INSERT_UPDATE);
+        // strategyConfigBuilder.entityBuilder().addTableFills(createTime, updateTime);
         // -------------------- Controller 策略配置
         // 设置父类
         // strategyConfigBuilder.controllerBuilder().superClass(Class<BaseController.class>);

@@ -36,7 +36,7 @@ public class ToolController {
         return Result.success(SecureUtil.md5(password));
     }
 
-    @GetMapping ("add")
+    @GetMapping("add")
     @Operation(description = "添加新job")
     @ApiOptions(login = false)
     public Result addJob(String taskId) throws SchedulerException {
@@ -44,6 +44,7 @@ public class ToolController {
         this.taskService.setTaskStatus(taskId, Constants.STATUS_VALID);
         return Result.success();
     }
+
     @GetMapping("resume")
     @Operation(description = "恢复job")
     @ApiOptions(login = false)
@@ -52,6 +53,7 @@ public class ToolController {
         this.taskService.setTaskStatus(taskId, Constants.STATUS_VALID);
         return Result.success();
     }
+
     @GetMapping("stop")
     @Operation(description = "停止job")
     @ApiOptions(login = false)
@@ -60,6 +62,7 @@ public class ToolController {
         this.taskService.setTaskStatus(taskId, Constants.STATUS_INVALID);
         return Result.success();
     }
+
     @GetMapping("unload")
     @Operation(description = "卸载job")
     @ApiOptions(login = false)

@@ -62,7 +62,7 @@ public class Task implements Serializable {
     private Integer taskType;
 
     @Schema(name = "单次任务启动时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @TableField("schedule_time")
     private Date scheduleTime;
 

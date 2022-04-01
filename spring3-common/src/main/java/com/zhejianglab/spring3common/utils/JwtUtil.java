@@ -56,8 +56,8 @@ public class JwtUtil {
     public static Boolean validate(String token) {
         try {
             JWTValidator.of(token.replace(TOKEN_PREFIX + " ", "")).validateDate();
-            return  JWT.of(token.replace(TOKEN_PREFIX + " ", "")).setKey(SECRET).verify();
-        }catch (ValidateException e){
+            return JWT.of(token.replace(TOKEN_PREFIX + " ", "")).setKey(SECRET).verify();
+        } catch (ValidateException e) {
             return false;
         }
     }

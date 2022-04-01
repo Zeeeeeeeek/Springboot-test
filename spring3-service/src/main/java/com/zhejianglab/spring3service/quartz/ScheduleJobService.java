@@ -37,7 +37,7 @@ public class ScheduleJobService {
      */
     public void startJob() throws SchedulerException {
         List<Task> taskList = this.taskService.getAllCronTask();
-        if (CollUtil.isEmpty(taskList)){
+        if (CollUtil.isEmpty(taskList)) {
             log.info("定时任务加载数据为空");
             return;
         }
@@ -46,13 +46,13 @@ public class ScheduleJobService {
             JobDetail jobDetail;
             cronTrigger = getCronTrigger(task);
             jobDetail = getJobDetail(task);
-            scheduler.scheduleJob(jobDetail,cronTrigger);
-            log.info("编号：{}定时任务加载成功",task.getTaskId());
+            scheduler.scheduleJob(jobDetail, cronTrigger);
+            log.info("编号：{}定时任务加载成功", task.getTaskId());
         }
         try {
             scheduler.start();
         } catch (SchedulerException e) {
-            log.error("定时任务启动失败",e);
+            log.error("定时任务启动失败", e);
         }
     }
 
@@ -65,7 +65,7 @@ public class ScheduleJobService {
      */
     public void stopJob(String taskId) throws SchedulerException {
         scheduler.pauseJob(JobKey.jobKey(taskId));
-        log.info("编号：{}定时任务停止",taskId);
+        log.info("编号：{}定时任务停止", taskId);
     }
 
     /**
@@ -76,7 +76,7 @@ public class ScheduleJobService {
      */
     public void resumeJob(String taskId) throws SchedulerException {
         scheduler.resumeJob(JobKey.jobKey(taskId));
-        log.info("编号：{}定时任务恢复",taskId);
+        log.info("编号：{}定时任务恢复", taskId);
     }
 
     /**
@@ -103,7 +103,7 @@ public class ScheduleJobService {
         scheduler.unscheduleJob(TriggerKey.triggerKey(taskId));
         // 删除原来的job
         scheduler.deleteJob(JobKey.jobKey(taskId));
-        log.info("编号：{}定时任务卸载",taskId);
+        log.info("编号：{}定时任务卸载", taskId);
     }
 
     /**
@@ -113,7 +113,7 @@ public class ScheduleJobService {
      */
     public void reload(String taskId) throws SchedulerException {
         Task task = this.taskService.getTaskByTaskId(taskId);
-        if (task == null){
+        if (task == null) {
             throw new CustomException(ResultCode.SCHEDULE_CONFIG_NOT_FOUND);
         }
         String jobCode = task.getTaskId();
@@ -135,7 +135,7 @@ public class ScheduleJobService {
      * @param task
      * @return
      */
-    private JobDetail getJobDetail(Task task)  {
+    private JobDetail getJobDetail(Task task) {
 
         Class<? extends Job> aClass;
         try {
@@ -156,7 +156,7 @@ public class ScheduleJobService {
      * @param task
      * @return
      */
-    private CronTrigger getCronTrigger(Task task){
+    private CronTrigger getCronTrigger(Task task) {
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(task.getCron());
         return TriggerBuilder.newTrigger()
                 .withIdentity(TriggerKey.triggerKey(task.getTaskId()))
@@ -170,7 +170,7 @@ public class ScheduleJobService {
      * @param task
      * @return
      */
-    private SimpleTrigger getSimpleTrigger(Task task){
+    private SimpleTrigger getSimpleTrigger(Task task) {
         // 转换为时间差，秒单位
         int time = (int) (task.getScheduleTime().getTime() - System.currentTimeMillis()) / 1000;
         return (SimpleTrigger) TriggerBuilder.newTrigger()
@@ -188,13 +188,13 @@ public class ScheduleJobService {
      */
     private void InjectJob(Task task) throws SchedulerException {
         JobDetail jobDetail = getJobDetail(task);
-        if(Constants.TASK_EXECUTE_TYPE_CRON.equals(task.getTaskType())){
+        if (Constants.TASK_EXECUTE_TYPE_CRON.equals(task.getTaskType())) {
             CronTrigger cronTrigger = getCronTrigger(task);
             scheduler.scheduleJob(jobDetail, cronTrigger);
-        }else{
+        } else {
             SimpleTrigger simpleTrigger = getSimpleTrigger(task);
             scheduler.scheduleJob(jobDetail, simpleTrigger);
         }
-        log.info("编号：{}定时任务添加成功",task.getTaskId());
+        log.info("编号：{}定时任务添加成功", task.getTaskId());
     }
 }

@@ -18,6 +18,6 @@ public class MyJobOneTime implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         JobDetail jobDetail = jobExecutionContext.getJobDetail();
-        log.info("定时任务开始: {}, 任务标识: {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")),jobDetail.getKey().getName());
+        log.info("定时任务开始: {}, 任务标识: {}", LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), jobDetail.getKey().getName());
     }
 }

@@ -40,7 +40,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements IT
     public boolean setTaskStatus(String taskId, Integer status) {
         return this.update(
                 Wrappers.<Task>lambdaUpdate()
-                        .eq(Task::getTaskId,taskId)
-                        .set(Task::getStatus,status));
+                        .eq(Task::getTaskId, taskId)
+                        .set(Task::getStatus, status));
     }
 }

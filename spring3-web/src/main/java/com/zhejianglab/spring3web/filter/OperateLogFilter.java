@@ -1,6 +1,7 @@
 package com.zhejianglab.spring3web.filter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhejianglab.spring3common.constant.Constants;
 import com.zhejianglab.spring3common.utils.Sequence;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,17 +30,23 @@ public class OperateLogFilter implements Filter {
             servletRequest.setAttribute("_startTime", System.currentTimeMillis());
             int requestId = Sequence.nextValue();
             servletRequest.setAttribute("_UUID", requestId);
-            RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) servletRequest);
             String requestBody;
-            if ("GET".equals(requestWrapper.getMethod())) {
-                requestBody = JSONObject.toJSONString(requestWrapper.getParameterMap());
+            if (servletRequest.getContentType().contains(Constants.MULTIPART_CONTENT_TYPE)) {
+                requestBody = Constants.MULTIPART_CONTENT_TYPE_BODY;
+                log.info("RequestId: {} URL: {} Body:{}", requestId, ((HttpServletRequest) servletRequest).getRequestURL().toString(), requestBody);
+                filterChain.doFilter(servletRequest, servletResponse);
             } else {
-                requestBody = requestWrapper.getBody();
+                RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) servletRequest);
+                if ("GET".equals(requestWrapper.getMethod())) {
+                    requestBody = JSONObject.toJSONString(requestWrapper.getParameterMap());
+                } else {
+                    requestBody = requestWrapper.getBody();
+                }
+                requestBody = requestBody.replaceAll("\r\n", "");
+                requestBody = requestBody.replaceAll(" {2}", " ");
+                log.info("RequestId: {} URL: {} Body:{}", requestId, ((HttpServletRequest) servletRequest).getRequestURL().toString(), requestBody);
+                filterChain.doFilter(requestWrapper, servletResponse);
             }
-            requestBody = requestBody.replaceAll("\r\n", "");
-            requestBody = requestBody.replaceAll(" {2}", " ");
-            log.info("RequestId: {} URL: {} Body:{}", requestId, ((HttpServletRequest) servletRequest).getRequestURL().toString(), requestBody);
-            filterChain.doFilter(requestWrapper, servletResponse);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

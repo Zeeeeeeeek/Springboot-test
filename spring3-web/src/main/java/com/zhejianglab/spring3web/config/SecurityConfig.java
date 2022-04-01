@@ -77,7 +77,6 @@ public class SecurityConfig {
 
     /**
      * 配置放行路径，跳过jwt 与 SpringSecurity 验证
-     *
      */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

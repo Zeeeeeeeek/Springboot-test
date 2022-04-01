@@ -1,10 +1,7 @@
 package com.zhejianglab.spring3web.controller;
 
 
-import cn.hutool.core.io.IoUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.poi.excel.ExcelUtil;
-import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhejianglab.spring3common.Annotation.ApiOptions;
 import com.zhejianglab.spring3common.constant.Constants;
@@ -14,17 +11,17 @@ import com.zhejianglab.spring3common.dto.ResultCode;
 import com.zhejianglab.spring3dao.dto.IdDTO;
 import com.zhejianglab.spring3dao.entity.User;
 import com.zhejianglab.spring3service.service.IUserService;
+import com.zhejianglab.spring3web.excel.UserExcel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * <p>
@@ -37,7 +34,7 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @Tag(name = "用户控制器", description = "用户相关操作")
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends UserExcel {
 
     @Resource
     private IUserService userService;
@@ -79,18 +76,17 @@ public class UserController {
 
     @GetMapping("export")
     @Operation(description = "导出")
-    @ApiOptions
-    public void export(HttpServletResponse response) throws IOException {
-        String filenames = "测试";
-        filenames= new String(filenames.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
-        ExcelWriter writer = ExcelUtil.getWriter(true);
-        writer.write(this.userService.list(), true);
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        response.setHeader("Content-Disposition","attachment;filename="+filenames+".xlsx");
-        ServletOutputStream out=response.getOutputStream();
-        writer.flush(out, true);
-        writer.close();
-        IoUtil.close(out);
+    @ApiOptions(login = false)
+    public void excelExport() {
+        normalExcelExport(this.userService.list());
+    }
+
+    @PostMapping("import")
+    @Operation(description = "导入")
+    @ApiOptions(login = false)
+    public Result excelImport(@RequestParam MultipartFile file) throws IOException {
+        List<User> list = excelImport(file.getInputStream());
+        return Result.success(this.userService.saveBatch(list));
     }
 
 }
