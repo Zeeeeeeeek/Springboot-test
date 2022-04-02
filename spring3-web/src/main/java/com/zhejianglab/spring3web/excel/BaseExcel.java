@@ -21,8 +21,12 @@ import java.util.List;
  */
 public abstract class BaseExcel<T> {
 
+
     /**
-     * excel导入
+     * Excel导入
+     *
+     * @param inputStream
+     * @return
      */
     public abstract List<T> excelImport(InputStream inputStream);
 

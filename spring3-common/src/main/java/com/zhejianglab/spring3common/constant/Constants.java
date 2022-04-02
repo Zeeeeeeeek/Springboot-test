@@ -27,7 +27,7 @@ public class Constants {
     public static final String ROLE_SUPPORT = "'SUPPORT'";
 
     public static final String MULTIPART_CONTENT_TYPE = "multipart/form-data";
-    public static final String MULTIPART_CONTENT_TYPE_BODY = "file upload";
+    public static final String MULTIPART_CONTENT_TYPE_BODY = "multipart upload skip body parsing";
 
     public static final String[] SKIP_JWT_AUTHORIZATION_PATH = {"/auth/**", "/tool/**", "/test/**", "/swagger-ui/**", "/v3/**", "/swagger-ui.html"};
     public static final String[] INTERCEPTOR_EXCLUDE_PATH = {"/swagger-ui/**", "/static/**", "/resource/**", "/v3/**"};
