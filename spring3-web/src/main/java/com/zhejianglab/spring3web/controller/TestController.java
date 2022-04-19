@@ -9,12 +9,14 @@ import com.zhejianglab.spring3service.service.AsyncService;
 import com.zhejianglab.spring3service.service.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -70,5 +72,11 @@ public class TestController {
     public Result Async() {
         asyncService.executeAsync();
         return Result.success("直接返回");
+    }
+
+    @GetMapping("redirect")
+    @ApiOptions(login = false)
+    public void redirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("https://www.baidu.com");
     }
 }

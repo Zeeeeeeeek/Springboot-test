@@ -31,7 +31,7 @@ public class OperateLogFilter implements Filter {
             int requestId = Sequence.nextValue();
             servletRequest.setAttribute("_UUID", requestId);
             String requestBody;
-            if (servletRequest.getContentType().startsWith(Constants.MULTIPART_CONTENT_TYPE)) {
+            if (servletRequest.getContentType() != null && servletRequest.getContentType().startsWith(Constants.MULTIPART_CONTENT_TYPE)) {
                 //在遇到 multipart/form-data时放行
                 requestBody = Constants.MULTIPART_CONTENT_TYPE_BODY;
                 log.info("RequestId: {} URL: {} Body:{}", requestId, ((HttpServletRequest) servletRequest).getRequestURL().toString(), requestBody);
